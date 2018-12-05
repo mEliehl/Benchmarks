@@ -1,0 +1,63 @@
+version: '3.5'
+
+services:
+  csharp-mvc:
+    build:
+      context: .
+      dockerfile: ./CSharp/MVC/Dockerfile
+    ports:
+      - 5000:80
+    networks:
+      benchmark-nw:    
+    depends_on: 
+      - database-postgres
+    environment: 
+      - ConnectionString=Server=database-postgres;Port=5432;Database=benchmark;User Id=benchmark;Password=benchmark
+  go-gin:
+    build:
+      context: .
+      dockerfile: ./Go/Gin/Dockerfile
+    ports:
+      - 7000:80
+    networks:
+      benchmark-nw:    
+    depends_on: 
+      - database-postgres
+    environment: 
+      - host=database-postgres
+      - port=5432
+      - user-benchmark
+      - password=benchmark
+      - dbname=benchmark
+  javascript-express:
+    build:
+      context: .
+      dockerfile: ./JavaScript/Express/Dockerfile
+    ports:
+      - 9000:80
+    networks:
+      benchmark-nw:    
+    depends_on: 
+      - database-postgres
+    environment: 
+      - host=database-postgres
+      - port=5432
+      - username-benchmark
+      - password=benchmark
+      - dbname=benchmark
+  database-postgres:
+    build:
+      context: .
+      dockerfile: ./Database/Postgres/Dockerfile
+    restart: always
+    ports:
+      - 5432:5432
+    environment: 
+      POSTGRES_USER: benchmark
+      POSTGRES_PASSWORD: benchmark
+      POSTGRES_DB: benchmark
+    networks:
+      benchmark-nw:    
+networks:
+  benchmark-nw:
+    name: benchmark-nw

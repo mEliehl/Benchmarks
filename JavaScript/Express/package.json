@@ -1,0 +1,13 @@
+{
+  "name": "xpto",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "4.16.4",
+    "pg": "4.5.7",
+    "pg-promise": "8.4.6",
+    "pug": "2.0.1",
+    "body-parser": "1.18.2",
+    "escape-html": "1.0.3"
+  }
+}
